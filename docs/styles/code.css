@@ -1,0 +1,150 @@
+pre {
+  line-height: 125%;
+}
+
+td.linenos pre,
+span.linenos {
+  color: #abb2bf;
+  background-color: #21252b;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+td.linenos pre.special,
+span.linenos.special {
+  color: #e5c07b;
+  background-color: #3e4451;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.codehilite .hll {
+  background-color: #3e4451;
+}
+
+.codehilite {
+  background: #282c34;
+  color: #abb2bf;
+}
+
+.codehilite .c,
+.codehilite .ch,
+.codehilite .cm,
+.codehilite .cp,
+.codehilite .cpf,
+.codehilite .c1,
+.codehilite .cs,
+.codehilite .gu {
+  color: #5c6370;
+}
+
+.codehilite .err {
+  color: #ffffff;
+  background-color: #e06c75;
+}
+
+.codehilite .k,
+.codehilite .kc,
+.codehilite .kd,
+.codehilite .kp,
+.codehilite .kr,
+.codehilite .kt {
+  color: #61afef;
+}
+
+.codehilite .kn,
+.codehilite .nt,
+.codehilite .ow,
+.codehilite .gp {
+  color: #e06c75;
+}
+
+.codehilite .l,
+.codehilite .m,
+.codehilite .mb,
+.codehilite .mf,
+.codehilite .mh,
+.codehilite .mi,
+.codehilite .mo,
+.codehilite .il {
+  color: #d19a66;
+}
+
+.codehilite .n,
+.codehilite .nb,
+.codehilite .ni,
+.codehilite .nl,
+.codehilite .nn,
+.codehilite .py,
+.codehilite .nv,
+.codehilite .vc,
+.codehilite .vg,
+.codehilite .vi,
+.codehilite .vm,
+.codehilite .bp {
+  color: #abb2bf;
+}
+
+.codehilite .na,
+.codehilite .nc,
+.codehilite .nd,
+.codehilite .ne,
+.codehilite .nf,
+.codehilite .nx,
+.codehilite .fm {
+  color: #98c379;
+}
+
+.codehilite .no {
+  color: #56b6c2;
+}
+
+.codehilite .o {
+  color: #e06c75;
+}
+
+.codehilite .p,
+.codehilite .w {
+  color: #abb2bf;
+}
+
+.codehilite .s,
+.codehilite .sa,
+.codehilite .sb,
+.codehilite .sc,
+.codehilite .dl,
+.codehilite .sd,
+.codehilite .s1,
+.codehilite .s2,
+.codehilite .sh,
+.codehilite .si,
+.codehilite .sx,
+.codehilite .sr,
+.codehilite .ss {
+  color: #98c379;
+}
+
+.codehilite .se {
+  color: #c678dd;
+}
+
+.codehilite .go {
+  color: #56b6c2;
+}
+
+.codehilite .gi {
+  color: #98c379;
+}
+
+.codehilite .gd {
+  color: #e06c75;
+}
+
+.codehilite .ge {
+  font-style: italic;
+}
+
+.codehilite .gs {
+  font-weight: bold;
+}
+

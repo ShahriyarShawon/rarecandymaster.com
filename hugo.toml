@@ -1,0 +1,4 @@
+baseURL = 'https://rarecandymaster.com/'
+languageCode = 'en-us'
+title = 'RareCandyMaster Blog'
+theme = 'rarecandymaster-theme'
