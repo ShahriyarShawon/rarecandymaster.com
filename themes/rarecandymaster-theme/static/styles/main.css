@@ -1,7 +1,8 @@
 body {
+  font-size: 1.1em;
   font-family: Inter;
-  background-color: #1e1e28;
-  color: white;
+  background-color: #EAEAEA;
+  color: #121212;
 }
 body .active {
   display: block;
@@ -10,23 +11,23 @@ body .hidden {
   display: none;
 }
 body h1 {
-  color: #4ec3e0;
+  color: #3d7f89;
   margin-bottom: 20px;
 }
 body h2 {
-  color: #a8eaff;
+  color: #54b7d4;
 }
 body h3 {
-  color: #3aa655;
+  color: #4a9e5a;
 }
 body h4 {
-  color: #c957fa;
+  color: #706fa5;
 }
 body h2, body h3, body h4 {
   margin-bottom: 5px;
 }
 body a {
-  color: #4ec3e0;
+  color: #3d7f89;
 }
 body code, body pre {
   font-size: 1.15em;
@@ -36,7 +37,7 @@ body #bootstrap-pacman {
   padding: 5px;
   display: block;
   border-style: solid;
-  border-color: #c957fa;
+  border-color: #706fa5;
   border-width: 1px;
 }
 
@@ -45,7 +46,7 @@ nav {
   margin-top: 10px;
 }
 nav #nav-items {
-  border-bottom-color: #3aa655;
+  border-bottom-color: #4a9e5a;
   border-radius: 2px;
   border-bottom-style: solid;
 }
@@ -53,7 +54,7 @@ nav .navbar-toggle {
   float: right;
 }
 nav .navbar-toggle #hamburger {
-  fill: #4ec3e0;
+  fill: #3d7f89;
 }
 nav #favicon {
   display: inline-block;
@@ -74,16 +75,16 @@ nav ul li a {
   padding: 5px;
 }
 nav ul li a:hover {
-  color: #1e1e28;
-  background-color: #a8eaff;
+  color: #EAEAEA;
+  background-color: #54b7d4;
 }
 
 #warning {
-  color: #c03a2b;
+  color: #d03a2b;
 }
 
 .note {
-  color: #fff44f;
+  color: #e0c230;
 }
 
 .main-content {
@@ -104,7 +105,7 @@ nav ul li a:hover {
   margin-bottom: 10px;
 }
 .entry-item strong {
-  color: #3aa655;
+  color: #4a9e5a;
 }
 
 .anon_pepe {
@@ -119,12 +120,12 @@ nav ul li a:hover {
 }
 
 .welcome-text {
-  color: #c957fa;
+  color: #706fa5;
 }
 
 .tool-form label {
   display: block;
-  color: #c957fa;
+  color: #706fa5;
   font-size: 1.65em;
 }
 .tool-form input {
@@ -134,7 +135,7 @@ nav ul li a:hover {
   margin-bottom: 10px;
 }
 .tool-form button {
-  background-color: #4ec3e0;
+  background-color: #3d7f89;
   border: none;
   color: white;
   padding: 10px;
