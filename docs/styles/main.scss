@@ -1,18 +1,20 @@
-$bg-color: #1e1e28;
-$accent-scarlet: #c03a2b;
-$accent-violet: #c957fa;
-$accent-color: #4ec3e0;
-$accent-light: #a8eaff;
-$accent-emerald: #3aa655;
-$accent-lemon: #fff44f;
+$bg-color: #EAEAEA;
+$accent-scarlet: #d03a2b;
+$accent-violet: #706fa5;
+$accent-color: #3d7f89;
+$accent-light: #54b7d4;
+$accent-emerald: #4a9e5a;
+$accent-lemon: #e0c230;
 
 body {
+    font-size: calc(1em * 1.1);
+
     .active {
         display: block;
     }
     font-family: Inter;
     background-color: $bg-color;
-    color:white;
+    color:#121212;
 
     .hidden {
         display: none;
