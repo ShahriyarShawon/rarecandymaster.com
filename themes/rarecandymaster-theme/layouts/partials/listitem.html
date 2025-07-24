@@ -3,8 +3,12 @@
     <a href="{{ .RelPermalink }}"> {{ .Title }} </a>
   </h3>
   {{ if .PublishDate }}
-  <p>{{ time.Format "January 2, 2006" .PublishDate }}</p>
-  {{ end }} {{ if .Params.Tags }}
+  <p>Posted: {{ time.Format "January 2, 2006" .PublishDate }}</p>
+  {{ end }} 
+  {{ if .Lastmod }}
+  <p>Last modified: {{ .Lastmod.Format "January 2, 2006" }}</p>
+{{ end }}
+  {{ if .Params.Tags }}
   <p>Tags: {{ partial "tags.html" . -}}</p>
   {{ end }} {{ if .Summary }}
   <p>Summary: {{ .Summary }}</p>

@@ -65,15 +65,25 @@
 </nav>
 
 <h1>Automatic TV Show Intro Detection</h1>
-<p>July 23, 2025</p>
+<p>Posted: July 23, 2025</p>
+
+  <p>Last modified: July 24, 2025</p>
+
 
   Tags: 
   <a href="https://rarecandymaster.com/tags/python">python</a>
 
   <a href="https://rarecandymaster.com/tags/computer-vision">computer-vision</a>
 
+  <a href="https://rarecandymaster.com/tags/intro-detection">intro-detection</a>
+
 
 <div><h1 id="tldr">TLDR</h1>
+<p>The code used for this can be found <a href="https://github.com/ShahriyarShawon/python-auto-intro-detection/tree/4a74655c905a8ba0864d56fcde137ad0d1e4209d">
+  in this github repo at this commit
+</a>
+
+</p>
 <p>Using MS-SSIM (<a href="https://en.wikipedia.org/wiki/Structural_similarity_index_measure" target="_blank" rel="noopener">
   Multi Scale Strucutural Similarity
 </a>
@@ -82,7 +92,7 @@
 <p>The Single-Core performance operates at about 33 fps and using 4 cores to parallelize the process provides a small increase in performance to 52 fps</p>
 <p>Using a visual based process to find intro&rsquo;s seems to be unreliable with a series that has multiple different visuals while maintaining, more or less, the same audio track.</p>
 <h1 id="motivation">Motivation</h1>
-<p>Recently, I was watching Dragon Ball Z Kai and noticed that the intro song, Dragon Soul, had several different singers throughout various parts of the show. I didn&rsquo;t recall this and only remember one specific singer, Vic Mignogna. Since I already had all the episodes downloaded, I was thinking about replacing the audio track of the intro from each episode with the audio track which had Vic singing the theme song.</p>
+<p>Recently, I was re-watching Dragon Ball Z Kai and noticed that the intro song, Dragon Soul, had several different singers throughout various parts of the show. I didn&rsquo;t recall this from my childhood and only remember one specific singer, Vic Mignogna. Since I already had all the episodes downloaded, I was thinking about replacing the audio track of the intro from each episode with the audio track which had Vic singing the theme song.</p>
 <p>To do this, I&rsquo;ll use ffmpeg to perform the actual audio replacement, but I need to specify the start of the intro for each episode. Not all episodes start rolling the intro at the same time so I&rsquo;ll need to detect the intro for each episode on its own.</p>
 <h1 id="methodology">Methodology</h1>
 <p>The basic concept for both methods I used for intro detection is having a frame from the video from either the very beginning of the intro or the very end and then going through each frame in each episode and computing the similarity of the reference frame to each frame in the episode. I&rsquo;ll be using MS-SSIM (<a href="https://en.wikipedia.org/wiki/Structural_similarity_index_measure" target="_blank" rel="noopener">

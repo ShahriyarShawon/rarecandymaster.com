@@ -1,11 +1,14 @@
 +++
 title = "Automatic TV Show Intro Detection"
 date = "2025-07-23"
-tags = ["python", "computer-vision"]
+lastmod = "2025-07-24"
+tags = ["python", "computer-vision", "intro-detection"]
 draft = false
 +++
 
 # TLDR
+
+The code used for this can be found [in this github repo at this commit](https://github.com/ShahriyarShawon/python-auto-intro-detection/tree/4a74655c905a8ba0864d56fcde137ad0d1e4209d)
 
 Using MS-SSIM ([Multi Scale Strucutural Similarity](https://en.wikipedia.org/wiki/Structural_similarity_index_measure "_blank")) to calculate the similarity between a known frame and the last frame of an intro in DBZ Kai allowed me to figure out where the intro sequence was in a subset of the pre Boo Saga DBZ Kai episodes. 
 
@@ -15,7 +18,7 @@ Using a visual based process to find intro's seems to be unreliable with a serie
 
 # Motivation 
 
-Recently, I was watching Dragon Ball Z Kai and noticed that the intro song, Dragon Soul, had several different singers throughout various parts of the show. I didn't recall this and only remember one specific singer, Vic Mignogna. Since I already had all the episodes downloaded, I was thinking about replacing the audio track of the intro from each episode with the audio track which had Vic singing the theme song.
+Recently, I was re-watching Dragon Ball Z Kai and noticed that the intro song, Dragon Soul, had several different singers throughout various parts of the show. I didn't recall this from my childhood and only remember one specific singer, Vic Mignogna. Since I already had all the episodes downloaded, I was thinking about replacing the audio track of the intro from each episode with the audio track which had Vic singing the theme song.
 
 To do this, I'll use ffmpeg to perform the actual audio replacement, but I need to specify the start of the intro for each episode. Not all episodes start rolling the intro at the same time so I'll need to detect the intro for each episode on its own.
 

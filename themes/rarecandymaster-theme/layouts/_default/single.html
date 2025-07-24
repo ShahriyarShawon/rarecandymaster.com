@@ -1,6 +1,9 @@
 {{ define "main" }}
 <h1>{{ .Title }}</h1>
-<p>{{ time.Format "January 2, 2006" .PublishDate }}</p>
+<p>Posted: {{ time.Format "January 2, 2006" .PublishDate }}</p>
+{{ if .Lastmod }}
+  <p>Last modified: {{ .Lastmod.Format "January 2, 2006" }}</p>
+{{ end }}
 {{ if .Params.Tags }}
   Tags: {{ partial "tags.html" . -}}
 {{ end }}

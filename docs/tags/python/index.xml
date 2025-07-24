@@ -13,7 +13,7 @@
       <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
       
       <guid>https://rarecandymaster.com/posts/automatic-tv-show-intro-detection/</guid>
-      <description>TLDR Using MS-SSIM (Multi Scale Strucutural Similarity  ) to calculate the similarity between a known frame and the last frame of an intro in DBZ Kai allowed me to figure out where the intro sequence was in a subset of the pre Boo Saga DBZ Kai episodes.
+      <description>TLDR The code used for this can be found in this github repo at this commit  Using MS-SSIM (Multi Scale Strucutural Similarity  ) to calculate the similarity between a known frame and the last frame of an intro in DBZ Kai allowed me to figure out where the intro sequence was in a subset of the pre Boo Saga DBZ Kai episodes.
 The Single-Core performance operates at about 33 fps and using 4 cores to parallelize the process provides a small increase in performance to 52 fps</description>
     </item>
     
