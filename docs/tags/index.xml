@@ -4,37 +4,62 @@
     <title>Tags on RareCandyMaster Blog</title>
     <link>https://rarecandymaster.com/tags/</link>
     <description>Recent content in Tags on RareCandyMaster Blog</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Nov 2024 00:51:33 -0500</lastBuildDate>
-    <atom:link href="https://rarecandymaster.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rarecandymaster.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Arch</title>
+      <title>computer-vision</title>
+      <link>https://rarecandymaster.com/tags/computer-vision/</link>
+      <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://rarecandymaster.com/tags/computer-vision/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://rarecandymaster.com/tags/python/</link>
+      <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://rarecandymaster.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>arch</title>
       <link>https://rarecandymaster.com/tags/arch/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 21 Nov 2024 00:51:33 -0500</pubDate>
+      
       <guid>https://rarecandymaster.com/tags/arch/</guid>
       <description></description>
     </item>
+    
     <item>
-      <title>Linux</title>
+      <title>linux</title>
       <link>https://rarecandymaster.com/tags/linux/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 21 Nov 2024 00:51:33 -0500</pubDate>
+      
       <guid>https://rarecandymaster.com/tags/linux/</guid>
       <description></description>
     </item>
+    
     <item>
-      <title>Printer</title>
+      <title>printer</title>
       <link>https://rarecandymaster.com/tags/printer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 21 Nov 2024 00:51:33 -0500</pubDate>
+      
       <guid>https://rarecandymaster.com/tags/printer/</guid>
       <description></description>
     </item>
+    
     <item>
-      <title>Minecraft</title>
+      <title>minecraft</title>
       <link>https://rarecandymaster.com/tags/minecraft/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      
       <guid>https://rarecandymaster.com/tags/minecraft/</guid>
       <description></description>
     </item>
+    
   </channel>
 </rss>

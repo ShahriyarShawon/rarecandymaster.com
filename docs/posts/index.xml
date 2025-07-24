@@ -4,23 +4,40 @@
     <title>Posts on RareCandyMaster Blog</title>
     <link>https://rarecandymaster.com/posts/</link>
     <description>Recent content in Posts on RareCandyMaster Blog</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Nov 2024 00:51:33 -0500</lastBuildDate>
-    <atom:link href="https://rarecandymaster.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://rarecandymaster.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatic TV Show Intro Detection</title>
+      <link>https://rarecandymaster.com/posts/automatic-tv-show-intro-detection/</link>
+      <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://rarecandymaster.com/posts/automatic-tv-show-intro-detection/</guid>
+      <description>TLDR Using MS-SSIM (Multi Scale Strucutural Similarity  ) to calculate the similarity between a known frame and the last frame of an intro in DBZ Kai allowed me to figure out where the intro sequence was in a subset of the pre Boo Saga DBZ Kai episodes.
+The Single-Core performance operates at about 33 fps and using 4 cores to parallelize the process provides a small increase in performance to 52 fps</description>
+    </item>
+    
     <item>
       <title>How to Set Up Printing for Brother MFC L2710DW on (Arch) Linux</title>
       <link>https://rarecandymaster.com/posts/how-to-set-up-printing-for-brother-mfc-l2710dw-on-arch-linux/</link>
       <pubDate>Thu, 21 Nov 2024 00:51:33 -0500</pubDate>
+      
       <guid>https://rarecandymaster.com/posts/how-to-set-up-printing-for-brother-mfc-l2710dw-on-arch-linux/</guid>
-      <description>As of 2024 there was a vulnerability found in CUPS so instead of running systemctl enable cups.service you should probably just explicitly start it with systemctl start cups.service when you need to print.&#xA;Installation Find the packages for your distro if not on Arch cups ghostscript The driver will either need to be obtained via the manufacturer or check to see if your package repositories have it anywhere, AUR has the driver for my printer</description>
+      <description>As of 2024 there was a vulnerability found in CUPS so instead of running systemctl enable cups.service you should probably just explicitly start it with systemctl start cups.service when you need to print.
+Installation Find the packages for your distro if not on Arch  cups   ghostscript    The driver will either need to be obtained via the manufacturer or check to see if your package repositories have it anywhere, AUR has the driver for my printer</description>
     </item>
+    
     <item>
       <title>How to create Minecraft 1.18 server with domain name in Arch Linux</title>
       <link>https://rarecandymaster.com/posts/how-to-create-minecraft-1.18-server-with-domain-name-in-arch-linux/</link>
       <pubDate>Sat, 02 Jul 2022 00:00:00 +0000</pubDate>
+      
       <guid>https://rarecandymaster.com/posts/how-to-create-minecraft-1.18-server-with-domain-name-in-arch-linux/</guid>
-      <description>This tutorial assumes that you have a vps or some type of system where arch linux is setup and you are able to access it using ssh or any other means. This is not an arch setup tutorial.&#xA;You&amp;rsquo;ll Need On Server&#xA;screen curl jdk (16&amp;gt;=) vim/nano On Local Machine&#xA;ssh client (putty or just ssh command from terminal) A namecheap domain&#xA;Get Everything Installed Remember this is a tutorial for Arch Linux so I&amp;rsquo;ll be providing the package name for pacman and not apt.</description>
+      <description>This tutorial assumes that you have a vps or some type of system where arch linux is setup and you are able to access it using ssh or any other means. This is not an arch setup tutorial.
+You&amp;rsquo;ll Need   On Server
+ screen curl jdk (16&amp;gt;=) vim/nano    On Local Machine
+ ssh client (putty or just ssh command from terminal)    A namecheap domain</description>
     </item>
+    
   </channel>
 </rss>

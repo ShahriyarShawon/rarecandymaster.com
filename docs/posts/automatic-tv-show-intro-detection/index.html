@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="stylesheet" href="https://rarecandymaster.com/styles/main.css">
+	<link rel="shortcut icon" href="https://rarecandymaster.com/favicon.png" type="image/x-icon" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+    <title>RareCandyMaster Blog</title>
+
+    
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-SR08T6MJZ9"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-SR08T6MJZ9");
+    </script>
+  </head>
+<body>
+    <div class="main-content"><nav class="scrollMenu">
+  <a href="/index.html">
+    <img src="https://rarecandymaster.com/favicon.png" id="favicon" alt="" srcset="" />
+  </a>
+
+  <span class="navbar-toggle" onclick="navtoggle()">
+    <svg viewBox="0 0 100 80" width="40" height="40" id="hamburger">
+      <rect width="100" height="20"></rect>
+      <rect y="30" width="100" height="20"></rect>
+      <rect y="60" width="100" height="20"></rect>
+    </svg>
+  </span>
+  <ul id="nav-items">
+    <li><a href="/">Home</a></li>
+    <li><a href="/posts">Posts</a></li>
+    <li><a href="/tags">Tags</a></li>
+    <li>
+      <a href="https://github.com/ShahriyarShawon" target="_blank">GitHub</a>
+    </li>
+    <li>
+      <a href="https://shahriyarshawon.com" target="_blank">Portfolio Site</a>
+    </li>
+    <li>
+      <a href="https://shahriyarshawon.com/Shahriyar-Shawon-Resume.pdf" target="_blank">Resume</a>
+    </li>
+    <li>
+      <a
+        href="https://www.youtube.com/channel/UC6AgrsLgCqKQ39kHzLTo0mQ"
+        target="_blank"
+        >YouTube</a
+      >
+    </li>
+  </ul>
+</nav>
+
+<h1>Automatic TV Show Intro Detection</h1>
+<p>July 23, 2025</p>
+
+  Tags: 
+  <a href="https://rarecandymaster.com/tags/python">python</a>
+
+  <a href="https://rarecandymaster.com/tags/computer-vision">computer-vision</a>
+
+
+<div><h1 id="tldr">TLDR</h1>
+<p>Using MS-SSIM (<a href="https://en.wikipedia.org/wiki/Structural_similarity_index_measure" target="_blank" rel="noopener">
+  Multi Scale Strucutural Similarity
+</a>
+
+) to calculate the similarity between a known frame and the last frame of an intro in DBZ Kai allowed me to figure out where the intro sequence was in a subset of the pre Boo Saga DBZ Kai episodes.</p>
+<p>The Single-Core performance operates at about 33 fps and using 4 cores to parallelize the process provides a small increase in performance to 52 fps</p>
+<p>Using a visual based process to find intro&rsquo;s seems to be unreliable with a series that has multiple different visuals while maintaining, more or less, the same audio track.</p>
+<h1 id="motivation">Motivation</h1>
+<p>Recently, I was watching Dragon Ball Z Kai and noticed that the intro song, Dragon Soul, had several different singers throughout various parts of the show. I didn&rsquo;t recall this and only remember one specific singer, Vic Mignogna. Since I already had all the episodes downloaded, I was thinking about replacing the audio track of the intro from each episode with the audio track which had Vic singing the theme song.</p>
+<p>To do this, I&rsquo;ll use ffmpeg to perform the actual audio replacement, but I need to specify the start of the intro for each episode. Not all episodes start rolling the intro at the same time so I&rsquo;ll need to detect the intro for each episode on its own.</p>
+<h1 id="methodology">Methodology</h1>
+<p>The basic concept for both methods I used for intro detection is having a frame from the video from either the very beginning of the intro or the very end and then going through each frame in each episode and computing the similarity of the reference frame to each frame in the episode. I&rsquo;ll be using MS-SSIM (<a href="https://en.wikipedia.org/wiki/Structural_similarity_index_measure" target="_blank" rel="noopener">
+  Multi Scale Strucutural Similarity
+</a>
+
+) to calculate frame similarity. When there is a sufficiently high level of similarity, that&rsquo;s a tell that the the program has found a match, and we can use the index of the matched frame and the FPS to calculate the timestamp where the match happens.</p>
+<h2 id="first-frame-based-intro-detection">First Frame Based Intro Detection</h2>
+<p>For this method, the first frame of the intro is detected. For specifically the DBZ Kai Pre Boo Saga episodes this method poses a slight problem. The first frame of the intro is completely black, there is about a second or two of just black frames with no audio that then evolved into the first visual frame. So instead, I used the first frame that wasn&rsquo;t just black to calculate the start and end position. Because there is a slight offset, the audio was not completely in sync.</p>
+<h2 id="last-frame-based-intro-detection">Last Frame Based Intro Detection</h2>
+<p>For this method the program will loop through the frames until there&rsquo;s a large drop-off in frame similarity. The idea is that for some frames at the end of the intro, there will be very high similarity between the reference frame and the frame the program is currently on. The frame directly after is probably not going to be similar at all to the end of the intro so there will be a steep drop-off of similarity. Using this drop-off we can figure out when the intro starts and ends more reliably.</p>
+<p><img
+    src="ssim-dropoff.png"
+    alt="MS-SSIM Dropoff"
+    style="width: 100%; height: auto; aspect-ratio: 2.1079;"
+    loading="lazy"
+  />
+
+
+<a href="ssim-dropoff.png" target="_blank" rel="noopener">
+  Click here for full res MS-SSIM Dropoff
+</a>
+
+</p>
+<h1 id="high-level-implementation">High-Level Implementation</h1>
+<h2 id="first-frame-based-intro-detection-1">First Frame Based Intro Detection</h2>
+<p>A pretty simple process.</p>
+<ol>
+<li>Read a frame from the cv2 Video Capture, reshape it if necessary.</li>
+<li>Calculate the MS-SSIM score. Add that score to a list of scores.</li>
+<li>If the current score is greater than <code>0.8</code>, we&rsquo;ve found the intro.</li>
+<li>Using the FPS, I can calculate the timestamp in seconds and then turn that into a MM:SS time for the first frame of the</li>
+</ol>
+<h2 id="last-frame-based-intro-detection-1">Last Frame Based Intro Detection</h2>
+<p>Pretty similar to the First Frame based process except step 3 would be:</p>
+<ol start="3">
+<li>If the difference between the previous and current score is greater than <code>0.5</code>, we&rsquo;ve found the last frame of the intro.</li>
+</ol>
+<h2 id="a-very-naive-multi-core-version-of-last-frame-based-intro-detection">A Very Naive Multi Core Version of Last Frame Based Intro Detection</h2>
+<p>In this implementation I&rsquo;m using the <code>multiprocessing</code> library to make use of multiple cores (4), and some data structures to share data.
+I&rsquo;m operating in batches of <code>1000</code> frames.</p>
+<h3 id="main-process">Main Process:</h3>
+<ol>
+<li>Loop Forever</li>
+<li>Read <code>1000</code> frames</li>
+<li>Convert each to grayscale</li>
+<li>Push the index of the frame and frame data into a queue</li>
+<li>Launch the cores</li>
+<li>Loop over the calculated scores and see if the <code>previous - current</code> score is greater than <code>0.5</code></li>
+</ol>
+<h3 id="consumer-processes">Consumer Processes:</h3>
+<ol>
+<li>Read an index and frame from queue as long as there are values to be read</li>
+<li>Calculate MS-SSIM score and put it into shared array at the index that was popped off the queue</li>
+<li>End once there are no more frames to be read</li>
+</ol>
+<h1 id="performance">Performance</h1>
+<p>Each implementation was tested on <code>S01E38</code> of <code>Dragon Ball Z Kai</code> so that the intro was offset into the video a little bit to get a better idea of the first and last frame implementations</p>
+<h2 id="specs-of-machine">Specs of Machine</h2>
+<ul>
+<li>CPU: <code>AMD Ryzen 7 5800X3D</code></li>
+<li>RAM: 32 GB</li>
+</ul>
+<h2 id="video-specs">Video Specs</h2>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Attribute</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Resolution</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">1440x1080</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Encoding</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">h264 (High)</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Colorspace</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">yuv420p (progressive)</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">23.98</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Bits Per Second?</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">4907332 -&gt; 613.4</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<h4 id="these-are-very-naive-implementations-that-are-not-optimized-and-there-is-for-sure-performance-left-on-the-table">These are very naive implementations that are not optimized and there is for sure performance left on the table.</h4>
+<h2 id="first-frame-based-intro-detection-2">First Frame Based Intro Detection</h2>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Metric</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Time Of Intro</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">00:26</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Frame</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">624</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Runtime</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">39s</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">16</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<p>I noticed that this FPS seems fairly low, It&rsquo;s because I realized the reference frame I was using had a resolution of <code>1440x1080</code>. Let&rsquo;s see what the performance looks like when the reference image is <code>960x720</code>, just as it is for the Last Frame based implementations.</p>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Metric</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Time Of Intro</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">00:26</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Frame</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">624</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Runtime</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">19s</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">32.8</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<p>Shrinking the images that ssim operates on clearly shows an improvement in performance.</p>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Metric</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Increase/Decrease</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Runtime</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">51%</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Decrease</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">105%</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Increase</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<h2 id="last-frame-based-intro-detection-2">Last Frame Based Intro Detection</h2>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Metric</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Time Of Intro</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">1:51</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Frame</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">2664</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Runtime</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">1:22</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">32.5</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<h2 id="naive-multi-core-implementation">Naive Multi Core Implementation</h2>
+
+
+
+  
+
+
+
+
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  
+  <thead>
+    <tr>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Metric</th>
+      
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">Value</th>
+      
+    </tr>
+  </thead>
+  
+  <tbody>
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Time Of Intro</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">1:51</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Frame</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">2664</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Runtime</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">51s</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">52.2</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">FPS/Core</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">13</td>
+      
+    </tr>
+    
+    
+    
+    
+    <tr>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">Cores</td>
+      
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">4</td>
+      
+    </tr>
+    
+    
+  </tbody>
+</table>
+
+<h1 id="limitations">Limitations</h1>
+<h2 id="accuracy">Accuracy</h2>
+<p>The first frame based method at the moment is not entirely accurate. Because the DBZ Kai intro first has around a second of black frames before starting the intro, when I was replacing the audio track, the audio didn&rsquo;t sync up. Realistically, this could probably be solved by offsetting the calculated frame with the number of frames that there is a black frame on screen. This seems a bit simplistic and I imagine there could be some potential problems with this method which is what led me to use the last frame-based method.</p>
+<h2 id="methodology-1">Methodology</h2>
+<p>While testing on a few episodes I realized that my script was failing on S01E64. Upon further inspection I saw that the last frame of the was not the same as S01E1 and S01E38. This means that this method would only work on a subset of episodes which means I should find a better method of recognizing the end of an intro based on something other than just frame similarity. Maybe something based on audio would be a better method.</p>
+<h2 id="multi-core">Multi Core</h2>
+<p>My multi core implementation is very very bad. I get a marginally better time overall but per core the rate decreases by a lot. I&rsquo;m not very familiar with using multiprocessing so mostly this is a skill issue. I imagine the multiprocessing queue has some sort of synchronization/built-in locking so that could potentially be holding back some performance. For next steps I want to be able to use a lock free method for grabbing frames and storing scores.</p>
+</div>
+
+
+    </div>
+
+	<script src="https://rarecandymaster.com/scripts/script.js"></script>
+  </body>
+</html>

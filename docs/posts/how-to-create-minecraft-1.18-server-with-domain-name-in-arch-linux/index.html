@@ -101,12 +101,16 @@ other means. This is not an arch setup tutorial.</p>
 </ul>
 <h2 id="get-everything-installed">Get Everything Installed</h2>
 <p>Remember this is a tutorial for Arch Linux so I&rsquo;ll be providing the package name for <code>pacman</code> and not <code>apt</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo pacman -s screen curl jdk-opendjk nano
-</span></span></code></pre></div><p>Substitute out <code>nano</code> for <code>vim</code> if needed and feel free to leave out <code>curl</code> if its already installed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo pacman -s screen curl jdk-opendjk nano
+</code></pre></div><p>Substitute out <code>nano</code> for <code>vim</code> if needed and feel free to leave out <code>curl</code> if its already installed.</p>
 <h2 id="setup-server">Setup Server</h2>
 <ul>
 <li>Get Vanilla 1.18 <code>server.jar</code> from
-<a href="https://serverjars.com/">minecraftjars.com</a>
+<a href="https://serverjars.com/">
+  minecraftjars.com
+</a>
+
+
 <ul>
 <li>you can right click download under 1.18 Vanilla and click copy
 link address</li>
@@ -115,11 +119,11 @@ link address</li>
 </li>
 <li>make directory for server</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir mcserver
-</span></span><span style="display:flex;"><span>cd mcserver
-</span></span><span style="display:flex;"><span>curl -o server.jar https://serverjars.com/api/fetchJar/vanilla/1.18
-</span></span><span style="display:flex;"><span>java -jar server.jar
-</span></span></code></pre></div><p>That last command will generate the <code>eula.txt</code> document that you need
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">mkdir mcserver
+cd mcserver
+curl -o server.jar https://serverjars.com/api/fetchJar/vanilla/1.18
+java -jar server.jar
+</code></pre></div><p>That last command will generate the <code>eula.txt</code> document that you need
 to edit. Open <code>eula.txt</code> in a text editor you installed from before and
 change false to true next to <code>eula=</code></p>
 <p>You can now run the <code>java -jar server.jar</code> command againt now but lets
@@ -127,17 +131,17 @@ add <code>-Xmx3G</code> to tell java to use 3GB of ram for the server. You can
 replace the 3 to however much ram you want to dedicate towards the
 server.</p>
 <p>The final command ends up being</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>java -jar -Xmx3G server.jar
-</span></span></code></pre></div><p>I don&rsquo;t want to type out this command everytime I want to start up my
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">java -jar -Xmx3G server.jar
+</code></pre></div><p>I don&rsquo;t want to type out this command everytime I want to start up my
 server so I put this command in a file called <code>runserver.sh</code></p>
 <h2 id="startup-script">Startup Script</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># create runserver.sh file</span>
-</span></span><span style="display:flex;"><span>touch runserver.sh
-</span></span><span style="display:flex;"><span>nano runserver.sh
-</span></span></code></pre></div><p>Next put the following into the file</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>java -jar -Xmx3G server.jar
-</span></span></code></pre></div><p>Save and exit your file and then run <code>chmod +x runserver.sh</code> to make
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># create runserver.sh file</span>
+touch runserver.sh
+nano runserver.sh
+</code></pre></div><p>Next put the following into the file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>java -jar -Xmx3G server.jar
+</code></pre></div><p>Save and exit your file and then run <code>chmod +x runserver.sh</code> to make
 your script executable.</p>
 <p>To run your script, make sure you are the in the correct directory
 using the <code>ls</code> command and then run the script with <code>./runserver.sh</code></p>
@@ -150,11 +154,23 @@ detach from it.</p>
 <p>After running <code>screen</code> run your startup script with <code>./runserver.sh</code>
 after it&rsquo;s loaded, you can press <code>ctrl+a d</code> to detach from that session.
 This&rsquo;ll bring you back to your normal bash session. If you want to reattach to the <code>screen</code> window, you can do <code>screen -r</code>.</p>
-<p>For more information on <code>screen</code>, you can run <code>man screen</code> or <code>info  screen</code> or go to the <a href="https://www.gnu.org/software/screen/manual/screen.html">GNU Docs for screen</a></p>
+<p>For more information on <code>screen</code>, you can run <code>man screen</code> or <code>info  screen</code> or go to the <a href="https://www.gnu.org/software/screen/manual/screen.html">
+  GNU Docs for screen
+</a>
+
+</p>
 <h2 id="connect-to-server-using-domain-name">Connect to Server using domain name</h2>
-<p>Taken from <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9765/2208/how-can-i-link-my-domain-name-to-a-minecraft-server/">Namecheap Article</a>:</p>
+<p>Taken from <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9765/2208/how-can-i-link-my-domain-name-to-a-minecraft-server/">
+  Namecheap Article
+</a>
+
+:</p>
 <blockquote>
-<p>Mapping a subdomain (e.g., mc.yourdomain.tld, <a href="https://www.yourdomain.tld">www.yourdomain.tld</a>, etc.) to your Minecraft server.</p>
+<p>Mapping a subdomain (e.g., mc.yourdomain.tld, <a href="http://www.yourdomain.tld">
+  www.yourdomain.tld
+</a>
+
+, etc.) to your Minecraft server.</p>
 <p>Let’s check how records should be changed to have the mc.yourdomain.tld subdomain linked to the Minecraft server.</p>
 <p>Please note that mc.yourdomain.tld is an example, and all settings should be adapted to your subdomain. Thus, if you wish to connect a subdomain, add &gt;your subdomain to Protocol and Target or Protocol only if you have a custom Target.</p>
 <p>The A record set for the subdomain mc.yourdomain.tld has the following values:</p>
@@ -170,7 +186,14 @@ This&rsquo;ll bring you back to your normal bash session. If you want to reattac
 <p>Target: [your domain with the subdomain]</p>
 <p>TTL: Automatic or 30 min (our default TTL)</p>
 </blockquote>
-<p><img src="https://namecheap.simplekb.com/SiteContents/2-7C22D5236A4543EB827F3BD8936E153E//media/2021-01-11_09-04.png" alt="namecheap changes"></p>
+<p><img
+    src="https://namecheap.simplekb.com/SiteContents/2-7C22D5236A4543EB827F3BD8936E153E//media/2021-01-11_09-04.png"
+    alt="namecheap changes"
+    style="width: 100%; height: auto;"
+    loading="lazy"
+  />
+
+</p>
 <p>NOTE: <code>[custom port]</code> is the default 25565 if you didn&rsquo;t change it in <code>server.properties</code></p>
 <p>This could take around 30 minutes to kick into effect. After that you
 should be able to connect using mc.domain.tld</p>

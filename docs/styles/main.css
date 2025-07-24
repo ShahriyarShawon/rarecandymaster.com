@@ -143,6 +143,24 @@ nav ul li a:hover {
   margin-top: 5px;
 }
 
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd; /* light gray */
+  padding: 8px;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
 @media only screen and (min-width: 900px) {
   .main-content {
     width: 60vw;

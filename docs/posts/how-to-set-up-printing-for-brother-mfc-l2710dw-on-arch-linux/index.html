@@ -80,23 +80,31 @@ explicitly start it with <code>systemctl start cups.service</code> when you need
 <h1 id="installation">Installation</h1>
 <h3 id="find-the-packages-for-your-distro-if-not-on-arch">Find the packages for your distro if not on Arch</h3>
 <ul>
-<li><a href="https://repology.org/project/cups/versions">cups</a></li>
-<li><a href="https://repology.org/project/ghostscript/versions">ghostscript</a></li>
+<li><a href="https://repology.org/project/cups/versions">
+  cups
+</a>
+
+</li>
+<li><a href="https://repology.org/project/ghostscript/versions">
+  ghostscript
+</a>
+
+</li>
 </ul>
 <p>The driver will either need to be obtained via the manufacturer or check to see if your package repositories have it anywhere, AUR has the driver for my printer</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install Cups</span>
-</span></span><span style="display:flex;"><span>$ pacman -S cups
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install GhostScript</span>
-</span></span><span style="display:flex;"><span>$ pacman -S ghostscript
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Drivers for Brother MFC L2710DW</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">## The drivers on Arch is in the AUR</span>
-</span></span><span style="display:flex;"><span>$ paru MFC-L2710DW
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start Cups</span>
-</span></span><span style="display:flex;"><span>$ systemctl start cups.service
-</span></span></code></pre></div><h1 id="configuration">Configuration</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Install Cups</span>
+$ pacman -S cups
+
+<span style="color:#75715e"># Install GhostScript</span>
+$ pacman -S ghostscript
+
+<span style="color:#75715e"># Install Drivers for Brother MFC L2710DW</span>
+<span style="color:#75715e">## The drivers on Arch is in the AUR</span>
+$ paru MFC-L2710DW
+
+<span style="color:#75715e"># Start Cups</span>
+$ systemctl start cups.service
+</code></pre></div><h1 id="configuration">Configuration</h1>
 <ul>
 <li>Navigate to <code>localhost:631</code> &gt; Administration &gt; Add Printer</li>
 <li>In <code>Connection</code> enter : <code>ipp://&lt;PRINTER_IP&gt;/ipp/port1</code></li>
