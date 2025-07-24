@@ -1,0 +1,23 @@
+{{- $src := .Destination | safeURL -}}
+{{- $image := .Page.Resources.GetMatch (printf "*%s" (path.Base $src)) -}}
+
+{{- if $image -}}
+  {{- $aspectWidth := $image.Width | float -}}
+  {{- $aspectHeight := $image.Height | float -}}
+  {{- $aspectRatio := printf "%.4f" (div $aspectWidth $aspectHeight) -}}
+
+  <img
+    src="{{ $src }}"
+    alt="{{ .Text }}"
+    style="width: 100%; height: auto; aspect-ratio: {{ $aspectRatio }};"
+    loading="lazy"
+  />
+{{- else -}}
+  <img
+    src="{{ $src }}"
+    alt="{{ .Text }}"
+    style="width: 100%; height: auto;"
+    loading="lazy"
+  />
+{{- end }}
+

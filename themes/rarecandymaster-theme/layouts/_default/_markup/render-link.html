@@ -1,0 +1,8 @@
+{{- $href := .Destination | safeURL -}}
+{{- $title := .Title | default "" -}}
+
+<a href="{{ $href }}"
+   {{- if eq $title "_blank" }} target="_blank" rel="noopener"{{- end }}>
+  {{ .Text | safeHTML }}
+</a>
+

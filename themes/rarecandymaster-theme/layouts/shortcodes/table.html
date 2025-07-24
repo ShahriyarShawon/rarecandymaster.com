@@ -1,0 +1,32 @@
+{{ $headerString := .Get "headers" }}
+{{ $headers := slice }}
+{{ if $headerString }}
+  {{ $headers = split $headerString "," }}
+{{ end }}
+
+{{ $content := trim .Inner " \n\r\t" }}
+{{ $rows := split $content "\n" }}
+
+<table style="border-collapse: collapse; border: 1px solid #d3d3d3;">
+  {{ if $headers }}
+  <thead>
+    <tr>
+      {{ range $headers }}
+      <th style="border: 1px solid #d3d3d3; padding: 8px; text-align: left; background-color: #706fa5; color: white;">{{ trim . " " }}</th>
+      {{ end }}
+    </tr>
+  </thead>
+  {{ end }}
+  <tbody>
+    {{ range $rows }}
+    {{ if . }}
+    {{ $cells := split . "|" }}
+    <tr>
+      {{ range $cells }}
+      <td style="border: 1px solid #d3d3d3; padding: 8px; text-align: left;">{{ trim . " " }}</td>
+      {{ end }}
+    </tr>
+    {{ end }}
+    {{ end }}
+  </tbody>
+</table>

@@ -175,6 +175,23 @@ nav {
 
 }
 
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.custom-table td,
+.custom-table th {
+  border: 1px solid #ddd; /* light gray border */
+  padding: 8px;
+}
+
+.custom-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+
 @media only screen and (min-width: 900px) {
     .main-content{
         width: 60vw;
